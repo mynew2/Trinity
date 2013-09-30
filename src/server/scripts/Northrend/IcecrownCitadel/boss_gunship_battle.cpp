@@ -427,6 +427,7 @@ void RelocateTransport(Transport* t)
 
     t->Update(100);
 	t->UpdateNPCPositions();
+	t->UpdatePlayerPositions();
 }
 
 
@@ -837,7 +838,7 @@ class npc_muradin_gunship : public CreatureScript
                 events.Reset();
                 map = me->GetMap();
                 skybreaker = me->GetTransport();
-							     UpdateTransportMotionInMap(skybreaker);
+				UpdateTransportMotionInMap(skybreaker);
                 SummonCount = RAID_MODE(3, 5, 4, 6);
                 count = 0;
                 RocketerCount = RAID_MODE(2, 4, 2, 4);
@@ -957,14 +958,20 @@ class npc_muradin_gunship : public CreatureScript
                     case ACTION_ROCK_DIE:
                         ++RocketerDieCount; 
                         if(RocketerDieCount == RocketerCount)
-							if(_instance->GetBossState(DATA_GUNSHIP_EVENT) == IN_PROGRESS)
-                            events.ScheduleEvent(EVENT_RESPAWN_ROCKETEER, 60000);
+							if(me->GetEntry() != NPC_GB_SKYBREAKER_MORTAR_SOLDIER)
+							{
+								if(_instance->GetBossState(DATA_GUNSHIP_EVENT) == IN_PROGRESS)
+								events.ScheduleEvent(EVENT_RESPAWN_ROCKETEER, 60000);
+							}
                         break;
                     case ACTION_AXES_RIFL_DIE:
                         ++RiflDieCount;
                         if(RiflDieCount == RiflCount)
-							if(_instance->GetBossState(DATA_GUNSHIP_EVENT) == IN_PROGRESS)
-                            events.ScheduleEvent(EVENT_RESPAWN_AXES_RIFLEMEN, 60000);
+							if(me->GetEntry() != NPC_GB_SKYBREAKER_RIFLEMAN)
+							{
+								if(_instance->GetBossState(DATA_GUNSHIP_EVENT) == IN_PROGRESS)
+								events.ScheduleEvent(EVENT_RESPAWN_AXES_RIFLEMEN, 60000);
+							}
                         break;
                 }
             }
@@ -1144,38 +1151,45 @@ class npc_muradin_gunship : public CreatureScript
 							}
 							break;
                         case EVENT_RESPAWN_ROCKETEER:
-                            Talk(SAY_NEW_MORTAR_TEAM_SPAWNED);
-                            if(RocketerCount == 2)
-                            {
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -8.61003f, 15.483f, 20.4158f, 4.69854f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -27.9583f, 14.8875f, 20.4428f, 4.77865f);
-                            }
-                            if(RocketerCount == 4)
-                            {
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -8.61003f, 15.483f, 20.4158f, 4.69854f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -27.9583f, 14.8875f, 20.4428f, 4.77865f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -15.61003f, 15.483f, 20.4158f, 4.69854f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -20.9583f, 14.8875f, 20.4428f, 4.77865f);
-                            }
+							if(me->GetEntry() != NPC_GB_SKYBREAKER_MORTAR_SOLDIER)
+							{
+								Talk(SAY_NEW_MORTAR_TEAM_SPAWNED);
+								if(RocketerCount == 2)
+								{
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -8.61003f, 15.483f, 20.4158f, 4.69854f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -27.9583f, 14.8875f, 20.4428f, 4.77865f);
+								}
+							
+								if(RocketerCount == 4)
+								{
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -8.61003f, 15.483f, 20.4158f, 4.69854f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -27.9583f, 14.8875f, 20.4428f, 4.77865f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -15.61003f, 15.483f, 20.4158f, 4.69854f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MORTAR_SOLDIER, -20.9583f, 14.8875f, 20.4428f, 4.77865f);
+								}
+							}
                             break;
                         case EVENT_RESPAWN_AXES_RIFLEMEN:
-                            Talk(SAY_NEW_RIFLEMEN_SPAWNED);
-                            if(RiflCount == 4)
-                            {
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -28.0876f, -22.9462f, 21.659f, 4.72416f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -21.7406f, -22.9462f, 21.659f, 4.72416f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -14.9806f, -22.9462f, 21.659f, 4.72416f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -5.15231f, -22.9462f, 21.659f, 4.72416f);
-                            }
-                            if(RiflCount == 6)
-                            {
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -33.0876f, -22.9462f, 21.659f, 4.72416f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -28.0876f, -22.9462f, 21.659f, 4.72416f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -21.7406f, -22.9462f, 21.659f, 4.72416f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -14.9806f, -22.9462f, 21.659f, 4.72416f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -5.15231f, -22.9462f, 21.659f, 4.72416f);
-                                skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, 0.15231f, -22.9462f, 21.659f, 4.72416f);
-                            }
+							if(me->GetEntry() != NPC_GB_SKYBREAKER_RIFLEMAN)
+							{
+								Talk(SAY_NEW_RIFLEMEN_SPAWNED);
+								if(RiflCount == 4)
+								{
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -28.0876f, -22.9462f, 21.659f, 4.72416f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -21.7406f, -22.9462f, 21.659f, 4.72416f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -14.9806f, -22.9462f, 21.659f, 4.72416f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -5.15231f, -22.9462f, 21.659f, 4.72416f);
+								}
+								if(RiflCount == 6)
+								{
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -33.0876f, -22.9462f, 21.659f, 4.72416f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -28.0876f, -22.9462f, 21.659f, 4.72416f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -21.7406f, -22.9462f, 21.659f, 4.72416f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -14.9806f, -22.9462f, 21.659f, 4.72416f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, -5.15231f, -22.9462f, 21.659f, 4.72416f);
+									skybreaker->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_RIFLEMAN, 0.15231f, -22.9462f, 21.659f, 4.72416f);
+								}
+							}
                             break;
                       }
                 }
@@ -1362,6 +1376,7 @@ class npc_korkron_axethrower_rifleman : public CreatureScript
                 me->RemoveAurasDueToSpell(SPELL_EXPERIENCED);
                 me->RemoveAurasDueToSpell(SPELL_ELITE);
                 me->RemoveAurasDueToSpell(SPELL_VETERAN);
+				me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 events.ScheduleEvent(EVENT_EXPERIENCED, urand(19000, 21000)); // ~20 sec
                 events.ScheduleEvent(EVENT_VETERAN, urand(39000, 41000));     // ~40 sec
                 events.ScheduleEvent(EVENT_ELITE, urand(59000, 61000));       // ~60 sec
@@ -1472,7 +1487,6 @@ class npc_sergeant : public CreatureScript
             void Reset()
             {
                 ScriptedAI::Reset();
-                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 me->SetReactState(REACT_AGGRESSIVE);
 				SetEquipmentSlots(false, 49689, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
                 events.ScheduleEvent(EVENT_WALK_MOBS, 1500);
@@ -1606,7 +1620,6 @@ class npc_marine_or_reaver : public CreatureScript
             {
                 ScriptedAI::Reset();
                 desperated = false;
-                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 me->SetReactState(REACT_AGGRESSIVE);
 				SetEquipmentSlots(false, 49708, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
 				me->SetReactState(REACT_AGGRESSIVE);
@@ -1723,7 +1736,7 @@ class npc_gunship_mage : public CreatureScript
                 ScriptedAI::Reset();
                 timer_BelowZero = urand(10000, 15000);
 				SetEquipmentSlots(false, 51887, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
-				me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+				me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
             }
 
             void DoAction(int32 action)
@@ -1789,7 +1802,7 @@ class npc_gunship_mage : public CreatureScript
 
                 if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
-					me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+					me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
 
                 if (me->GetGUID() == _instance->GetData64(DATA_GB_BATTLE_MAGE))
                 {
@@ -1910,7 +1923,7 @@ class npc_mortar_soldier_or_rocketeer : public CreatureScript
                 me->RemoveAurasDueToSpell(SPELL_EXPERIENCED);
                 me->RemoveAurasDueToSpell(SPELL_ELITE);
                 me->RemoveAurasDueToSpell(SPELL_VETERAN);
-				me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+				me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 events.ScheduleEvent(EVENT_EXPERIENCED, urand(19000, 21000)); // ~20 sec
                 events.ScheduleEvent(EVENT_VETERAN, urand(39000, 41000));     // ~40 sec
                 events.ScheduleEvent(EVENT_ELITE, urand(59000, 61000));       // ~60 sec
@@ -1935,12 +1948,11 @@ class npc_mortar_soldier_or_rocketeer : public CreatureScript
             {
                 if(_instance->GetBossState(DATA_GUNSHIP_EVENT) != IN_PROGRESS)
                     return;
-
-								me->SetReactState(REACT_DEFENSIVE);
+					me->SetReactState(REACT_DEFENSIVE);
 
                 if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
-                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+                    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 events.Update(diff);
 
                 while (uint32 eventId = events.ExecuteEvent())
@@ -2097,7 +2109,7 @@ class npc_saurfang_gunship : public CreatureScript
                 events.Reset();
                 map = me->GetMap();
                 orgrimmar = me->GetTransport();
-								UpdateTransportMotionInMap(orgrimmar);
+				UpdateTransportMotionInMap(orgrimmar);
                 RocketerDieCount = 0;
                 AxesDieCount = 0;
                 SummonCount = RAID_MODE(3, 5, 4, 6);
@@ -2206,8 +2218,10 @@ class npc_saurfang_gunship : public CreatureScript
                          break;
                      case ACTION_MAGE_DIE:
 						 //Check, if there really is no mage
-						 if(me->GetEntry() != NPC_GB_KORKRON_BATTLE_MAGE){
-						  events.ScheduleEvent(EVENT_SPAWN_MAGE, 60000);
+						 if(me->GetEntry() != NPC_GB_KORKRON_BATTLE_MAGE)
+						 {
+							if(_instance->GetBossState(DATA_GUNSHIP_EVENT) == IN_PROGRESS) 
+							events.ScheduleEvent(EVENT_SPAWN_MAGE, 60000);
 						 }
                         break;
                      case ACTION_ROCK_DIE:
@@ -2288,6 +2302,7 @@ class npc_saurfang_gunship : public CreatureScript
                             break;
                         case EVENT_INTRO_HORDE_1_1:
                             Talk(SAY_INTRO_HORDE_0_1);
+							RelocateTransport(orgrimmar);
                             break;
                         case EVENT_START_FLY:
 							StartFlyShip(orgrimmar); // Try
@@ -2329,9 +2344,9 @@ class npc_saurfang_gunship : public CreatureScript
                              {
                                  pSaurfang->AI()->Talk(SAY_BOARDING_SKYBREAKER_MURADIN);
                              }
-                             if (Creature* Sergante = orgrimmar->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_SERGANTE, 15.03016f, -7.00016f, 37.70952f, 1.55138f))
+                             if (Creature* sergante = orgrimmar->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_SERGANTE, 15.03016f, -7.00016f, 37.70952f, 1.55138f))
                              {
-                                 Sergante->CastSpell(Sergante, SPELL_TELEPORT_VISUAL, true);
+                                 sergante->CastSpell(sergante, SPELL_TELEPORT_VISUAL, true);
                              }
                              events.ScheduleEvent(EVENT_SUMMON_PORTAL, 60000);
 							 events.ScheduleEvent(EVENT_BOARDING_REAVERS_MARINE, 3000);
@@ -2341,9 +2356,9 @@ class npc_saurfang_gunship : public CreatureScript
 							if(_instance->GetBossState(DATA_GUNSHIP_EVENT) == IN_PROGRESS){
                             if(count <= SummonCount)
                             {
-                                if(Creature* Marine = orgrimmar->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MARINE, 15.03016f, -7.00016f, 37.70952f, 1.55138f))
+                                if(Creature* marine = orgrimmar->AddNPCPassengerInInstance(NPC_GB_SKYBREAKER_MARINE, 15.03016f, -7.00016f, 37.70952f, 1.55138f))
                                 {
-                                    Marine->CastSpell(Marine, SPELL_TELEPORT_VISUAL, true);
+                                    marine->CastSpell(marine, SPELL_TELEPORT_VISUAL, true);
                                     count++;
 									events.ScheduleEvent(EVENT_BOARDING_REAVERS_MARINE, 2500);
                                 }
@@ -2354,11 +2369,12 @@ class npc_saurfang_gunship : public CreatureScript
 							 _instance->DoCompleteAchievement(RAID_MODE(IM_ON_A_BOAT_10,IM_ON_A_BOAT_25,IM_ON_A_BOAT_10,IM_ON_A_BOAT_25));
                              _instance->DoCastSpellOnPlayers(SPELL_ACHIEVEMENT_CHECK);
                             StartFlyShip(orgrimmar);
+							RelocateTransport(orgrimmar);
                             StopFlyShip(CheckUnfriendlyShip(me,_instance,DATA_GB_MURADIN_BRONZEBEARD));
                             break;
                         case EVENT_OUTRO_HORDE_2:
                             StopFlyShip(orgrimmar);
-                            me->SummonGameObject(RAID_MODE(GO_CAPITAN_CHEST_H_10N, GO_CAPITAN_CHEST_H_25N, GO_CAPITAN_CHEST_H_10H, GO_CAPITAN_CHEST_H_25H), -590.200022f, 2241.193115f, 539.588269f, 0, 0, 0, 0, 0, 100000);
+                            me->SummonGameObject(RAID_MODE(GO_CAPITAN_CHEST_H_10N, GO_CAPITAN_CHEST_H_25N, GO_CAPITAN_CHEST_H_10H, GO_CAPITAN_CHEST_H_25H), -428.992706f, 1929.730713f, 214.143417f, 1.595296f, 0, 0, 0, 0, 100000);
                             me->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
                             me->GetMotionMaster()->MovePoint(0, -590.700f, 2213.01f, 539.1f);
                             break;
@@ -2385,45 +2401,51 @@ class npc_saurfang_gunship : public CreatureScript
                                    events.CancelEvent(EVENT_RENDING_THROW);
                             break;
 							case EVENT_SPAWN_MAGE:
-								   //Prevent from spawning multiple Mages
-									if(me->GetEntry() != NPC_GB_KORKRON_BATTLE_MAGE){
-									Talk(SAY_NEW_BATTLE_MAGE_SPAWNED);
-									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_BATTLE_MAGE, 15.03016f, 0.00016f, 37.70952f, 1.55138f);
-									}
+							//Prevent from spawning multiple Mages
+								if(me->GetEntry() != NPC_GB_KORKRON_BATTLE_MAGE){
+								Talk(SAY_NEW_BATTLE_MAGE_SPAWNED);
+								orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_BATTLE_MAGE, 15.03016f, 0.00016f, 37.70952f, 1.55138f);
+								}
                             break;
                         case EVENT_RESPAWN_ROCKETEER:
-                            Talk(SAY_NEW_ROCKETEERS_SPAWNED);
-                            if(RocketerCount == 2)
-                            {
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, -11.44849f, -25.71838f, 33.64343f, 1.49248f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, 12.30336f, -25.69653f, 35.32373f, 1.49248f);
-                            }
-                            if(RocketerCount == 4)
-                            {
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, -11.44849f, -25.71838f, 33.64343f, 1.49248f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, 12.30336f, -25.69653f, 35.32373f, 1.49248f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, -3.44849f, -25.71838f, 34.21082f, 1.49248f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, 3.30336f, -25.69653f, 35.32373f, 1.49248f);
-                            }
+							if(me->GetEntry() != NPC_GB_KORKRON_ROCKETEER)
+							{
+								Talk(SAY_NEW_ROCKETEERS_SPAWNED);
+								if(RocketerCount == 2)
+								{
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, -11.44849f, -25.71838f, 33.64343f, 1.49248f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, 12.30336f, -25.69653f, 35.32373f, 1.49248f);
+								}
+								if(RocketerCount == 4)
+								{
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, -11.44849f, -25.71838f, 33.64343f, 1.49248f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, 12.30336f, -25.69653f, 35.32373f, 1.49248f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, -3.44849f, -25.71838f, 34.21082f, 1.49248f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_ROCKETEER, 3.30336f, -25.69653f, 35.32373f, 1.49248f);
+								}
+							}
                             break;
                          case EVENT_RESPAWN_AXES_RIFLEMEN:
-                            Talk(SAY_NEW_AXETHROWER_SPAWNED);
-                            if(AxesCount == 4)
-                            {
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, -3.170555f, 28.30652f, 34.21082f, 1.66527f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, -12.0928f, 27.65942f, 33.58557f, 1.66527f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, 14.92804f, 26.18018f, 35.47803f, 1.66527f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, 24.70331f, 25.36584f, 35.97845f, 1.66527f);
-                            }
-                            if(AxesCount == 6)
-                            {
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, -3.170555f, 28.30652f, 34.21082f, 1.66527f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, -12.0928f, 27.65942f, 33.58557f, 1.66527f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, 14.92804f, 26.18018f, 35.47803f, 1.66527f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, 24.70331f, 25.36584f, 35.97845f, 1.66527f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, 19.92804f, 27.18018f, 35.47803f, 1.66527f);
-                                orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, -7.70331f, 28.36584f, 33.88557f, 1.66527f);
-                           }
+							 if(me->GetEntry() != NPC_GB_KORKRON_AXETHROWER)
+							 {
+								Talk(SAY_NEW_AXETHROWER_SPAWNED);
+								if(AxesCount == 4)
+								{
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, -3.170555f, 28.30652f, 34.21082f, 1.66527f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, -12.0928f, 27.65942f, 33.58557f, 1.66527f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, 14.92804f, 26.18018f, 35.47803f, 1.66527f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, 24.70331f, 25.36584f, 35.97845f, 1.66527f);
+								}
+								if(AxesCount == 6)
+								{
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, -3.170555f, 28.30652f, 34.21082f, 1.66527f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, -12.0928f, 27.65942f, 33.58557f, 1.66527f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, 14.92804f, 26.18018f, 35.47803f, 1.66527f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, 24.70331f, 25.36584f, 35.97845f, 1.66527f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, 19.92804f, 27.18018f, 35.47803f, 1.66527f);
+									orgrimmar->AddNPCPassengerInInstance(NPC_GB_KORKRON_AXETHROWER, -7.70331f, 28.36584f, 33.88557f, 1.66527f);
+								}
+						    }
                            break;
                       }
                 }
@@ -3156,11 +3178,9 @@ class transport_gunship : public TransportScript
             switch (transport->GetEntry())
             {
                 case GO_THE_SKYBREAKER_ALLIANCE_ICC:
-					player->RemoveAura(SPELL_ON_ORGRIMS_HAMMERS_DECK);
                     player->AddAura(SPELL_ON_SKYBREAKERS_DECK, player);
                     break;
                 case GO_ORGRIM_S_HAMMER_HORDE_ICC:
-					player->RemoveAura(SPELL_ON_SKYBREAKERS_DECK);
                     player->AddAura(SPELL_ON_ORGRIMS_HAMMERS_DECK, player);
                     break;
                 default:
@@ -3367,12 +3387,12 @@ class spell_rocket_pack : public SpellScriptLoader
 
             void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
             {
-                GetTarget()->CastSpell(GetTarget(), 68645, true);
+                GetTarget()->CastSpell(GetTarget(), 68721, true);
             }
 
             void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
             {
-                GetTarget()->RemoveAurasDueToSpell(68645);
+                GetTarget()->RemoveAurasDueToSpell(68721);
             }
 
             void Register()

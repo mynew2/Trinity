@@ -679,7 +679,7 @@ void Transport::Update(uint32 p_diff)
         else
         {
             Relocate(m_curr->second.x, m_curr->second.y, m_curr->second.z, GetAngle(m_next->second.x, m_next->second.y) + float(M_PI));
-            // This forces the server to update positions in transportation for players -- gunship
+			// This forces the server to update positions in transportation for players -- gunship
             UpdatePlayerPositions();	
         }
 

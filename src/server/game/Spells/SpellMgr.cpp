@@ -3164,6 +3164,11 @@ void SpellMgr::LoadSpellInfoCorrections()
             case 54171: // Divine Storm
                 spellInfo->MaxAffectedTargets = 3;
                 break;
+			case 68645: // Rocket Pack! Hack untill movejump will be implemented properly
+				spellInfo->Effects[0].Effect = SPELL_EFFECT_KNOCK_BACK_DEST;
+				spellInfo->Effects[0].MiscValue = -250;
+				spellInfo->Effects[0].BasePoints = 150;
+				break;
             case 38310: // Multi-Shot
             case 53385: // Divine Storm (Damage)
                 spellInfo->MaxAffectedTargets = 4;
