@@ -957,21 +957,25 @@ class npc_muradin_gunship : public CreatureScript
                         break;
                     case ACTION_ROCK_DIE:
                         ++RocketerDieCount; 
-                        if(RocketerDieCount == RocketerCount)
+                        if(RocketerCount == RocketerDieCount)
+						{
 							if(me->GetEntry() != NPC_GB_SKYBREAKER_MORTAR_SOLDIER)
 							{
 								if(_instance->GetBossState(DATA_GUNSHIP_EVENT) == IN_PROGRESS)
 								events.ScheduleEvent(EVENT_RESPAWN_ROCKETEER, 60000);
 							}
+						}
                         break;
                     case ACTION_AXES_RIFL_DIE:
                         ++RiflDieCount;
-                        if(RiflDieCount == RiflCount)
+                        if(RiflCount == RiflDieCount)
+						{
 							if(me->GetEntry() != NPC_GB_SKYBREAKER_RIFLEMAN)
 							{
 								if(_instance->GetBossState(DATA_GUNSHIP_EVENT) == IN_PROGRESS)
 								events.ScheduleEvent(EVENT_RESPAWN_AXES_RIFLEMEN, 60000);
 							}
+						}
                         break;
                 }
             }
@@ -1402,12 +1406,14 @@ class npc_korkron_axethrower_rifleman : public CreatureScript
                 {
                     if (Creature* pSaurfangBoss = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_GB_HIGH_OVERLORD_SAURFANG)))
                         pSaurfangBoss->AI()->DoAction(ACTION_AXES_RIFL_DIE);
+						me->DespawnOrUnsummon(60000);
                 }
                  
                 if (_instance->GetData(DATA_TEAM_IN_INSTANCE) == HORDE)
                 {
                     if (Creature* pMuradin = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_GB_MURADIN_BRONZEBEARD)))
                         pMuradin->AI()->DoAction(ACTION_AXES_RIFL_DIE);
+						me->DespawnOrUnsummon(60000);
                 }
             }
 
@@ -1425,6 +1431,7 @@ class npc_korkron_axethrower_rifleman : public CreatureScript
                 if (!UpdateVictim())
                     return;
 
+				me->DespawnOrUnsummon(60000);
                 events.Update(diff);
 
                 if (attacktimer <= diff)
@@ -1493,7 +1500,7 @@ class npc_sergeant : public CreatureScript
                 desperated = false;
                 me->RemoveAurasDueToSpell(SPELL_EXPERIENCED);
                 me->RemoveAurasDueToSpell(SPELL_ELITE);
-                DesperateResolve = RAID_MODE( SPELL_DESPERATE_RESOLVE_10_NM, SPELL_DESPERATE_RESOLVE_25_NM, SPELL_DESPERATE_RESOLVE_10_HM, SPELL_DESPERATE_RESOLVE_25_HM);
+                DesperateResolve = RAID_MODE(SPELL_DESPERATE_RESOLVE_10_NM, SPELL_DESPERATE_RESOLVE_25_NM, SPELL_DESPERATE_RESOLVE_10_HM, SPELL_DESPERATE_RESOLVE_25_HM);
                 events.ScheduleEvent(EVENT_EXPERIENCED, urand(19000, 21000));  // ~20 sec
                 events.ScheduleEvent(EVENT_VETERAN, urand(39000, 41000));      // ~40 sec
                 events.ScheduleEvent(EVENT_BURNING_PITCH, urand(60000, 62000));// ~61 sec
@@ -1524,7 +1531,8 @@ class npc_sergeant : public CreatureScript
 
                 if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
-                    
+                
+				me->DespawnOrUnsummon(60000);
                 events.Update(diff);
 
                 while (uint32 eventId = events.ExecuteEvent())
@@ -1656,6 +1664,7 @@ class npc_marine_or_reaver : public CreatureScript
                 if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
 
+				me->DespawnOrUnsummon(60000);
                 events.Update(diff);
 
                 while (uint32 eventId = events.ExecuteEvent())
@@ -1781,6 +1790,7 @@ class npc_gunship_mage : public CreatureScript
                     {
                         if (Creature* pSaurfangBoss = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_GB_HIGH_OVERLORD_SAURFANG)))
                             pSaurfangBoss->AI()->DoAction(ACTION_MAGE_DIE);
+							me->DespawnOrUnsummon(32000);
                     }
                  }
                  
@@ -1790,6 +1800,7 @@ class npc_gunship_mage : public CreatureScript
                      {
                          if (Creature* pMuradin = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_GB_MURADIN_BRONZEBEARD)))
                              pMuradin->AI()->DoAction(ACTION_MAGE_DIE);
+							me->DespawnOrUnsummon(32000);
                      }
                  }
             }
@@ -1798,11 +1809,12 @@ class npc_gunship_mage : public CreatureScript
             {
                 if(_instance->GetBossState(DATA_GUNSHIP_EVENT) != IN_PROGRESS)
                     return;
-								me->SetReactState(REACT_PASSIVE); //DoDato
+					me->SetReactState(REACT_PASSIVE); //DoDato
 
                 if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
 					me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+				me->DespawnOrUnsummon(32000);
 
                 if (me->GetGUID() == _instance->GetData64(DATA_GB_BATTLE_MAGE))
                 {
@@ -1936,11 +1948,13 @@ class npc_mortar_soldier_or_rocketeer : public CreatureScript
                 {
                     if (Creature* pSaurfangBoss = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_GB_HIGH_OVERLORD_SAURFANG)))
                         pSaurfangBoss->AI()->DoAction(ACTION_ROCK_DIE);
+						me->DespawnOrUnsummon(60000);
                 }
                 if (_instance->GetData(DATA_TEAM_IN_INSTANCE) == HORDE)
                 {
                     if (Creature* pMuradin = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_GB_MURADIN_BRONZEBEARD)))
                         pMuradin->AI()->DoAction(ACTION_ROCK_DIE);
+						me->DespawnOrUnsummon(60000);
                 }
             }
 
@@ -1953,6 +1967,7 @@ class npc_mortar_soldier_or_rocketeer : public CreatureScript
                 if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
                     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+				me->DespawnOrUnsummon(60000);
                 events.Update(diff);
 
                 while (uint32 eventId = events.ExecuteEvent())
@@ -3167,7 +3182,6 @@ class transport_gunship : public TransportScript
 
 		void OnRelocate(Transport* transport, uint32 waypointId, uint32 mapId, float x, float y, float z)
         {
-
         }
 
         void OnAddPassenger(Transport* transport, Player* player)
