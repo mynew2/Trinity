@@ -197,53 +197,37 @@ SET @ENTRYH25 := 38701;
 SET @ENTRYA25H := 38700;
 SET @ENTRYH25H := 38702;
 
-DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId`=13 AND `SourceEntry` IN (69400, 70173, 69402, 70175, 70374, 70383, 72959, 69705);
-INSERT INTO `conditions` (`SourceTypeOrReferenceId`, `SourceEntry`, `ConditionTypeOrReference`, `ConditionValue1`, `ConditionValue2`) VALUES
-('13', '69400', '18', '1', @ENTRYA),    -- Horde Cannon (Cannon Blast) set to hit only Skybreaker (effect 2)
-('13', '69400', '18', '1', @ENTRYA10H), -- Horde Cannon (Cannon Blast) set to hit only Skybreaker - 10H (effect 2)
-('13', '69400', '18', '1', @ENTRYA25),  -- Horde Cannon (Cannon Blast) set to hit only Skybreaker - 25Normal (effect 2)
-('13', '69400', '18', '1', @ENTRYA25H), -- Horde Cannon (Cannon Blast) set to hit only Skybreaker -- 25H (effect 2)
-('13', '70173', '18', '1', @ENTRYH),    -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer (effect 2)
-('13', '70173', '18', '1', @ENTRYH10H), -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer 10H (effect 2)
-('13', '70173', '18', '1', @ENTRYH25),  -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer - 25Normal (effect 2)
-('13', '70173', '18', '1', @ENTRYH25H), -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer -- 25H (effect 2)
-('13', '69402', '18', '1', @ENTRYA),    -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker (effect 2)
-('13', '69402', '18', '1', @ENTRYA10H), -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker 10H(effect 2)
-('13', '69402', '18', '1', @ENTRYA25),  -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker - 25Normal (effect 2)
-('13', '69402', '18', '1', @ENTRYA25H), -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker -- 25H (effect 2)
-('13', '70175', '18', '1', @ENTRYH),    -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer (effect 2)
-('13', '70175', '18', '1', @ENTRYH10H), -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer 10H (effect 2)
-('13', '70175', '18', '1', @ENTRYH25),  -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer - 25Normal (effect 2)
-('13', '70175', '18', '1', @ENTRYH25H), -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer -- 25H (effect 2)
-('13', '70374', '18', '1', @ENTRYA),    -- Burning Pitch
-('13', '70374', '18', '1', @ENTRYA10H), -- Burning Pitch
-('13', '70374', '18', '1', @ENTRYA25),  -- Burning Pitch
-('13', '70374', '18', '1', @ENTRYA25H), -- Burning Pitch
-('13', '70383', '18', '1', @ENTRYH),    -- Burning Pitch
-('13', '70383', '18', '1', @ENTRYH10H), -- Burning Pitch
-('13', '70383', '18', '1', @ENTRYH25),  -- Burning Pitch
-('13', '70383', '18', '1', @ENTRYH25H), -- Burning Pitch
-('13', '72959', '18', '1', 0),          -- Achievement (Radius: 50000 yards)
-('13', '69705' ,'18', '1', 36838),      -- Gunship Battle - Spell 69705 (Below Zero) target creature 36838
-('13', '69705' ,'18', '1', 36839);      -- Gunship Battle - Spell 69705 (Below Zero) target creature 36839
-
--- Update condition by TrinityCore:
+-- Update condition by TrinityCore
 DELETE FROM conditions WHERE SourceTypeOrReferenceId=13 AND SourceEntry IN (69400, 70173, 69402, 70175, 70374, 70383, 69705, 72959);
 INSERT INTO conditions (SourceTypeOrReferenceId, SourceGroup, SourceEntry, SourceId, ElseGroup, ConditionTypeOrReference, ConditionTarget, ConditionValue1, ConditionValue2, ConditionValue3, NegativeCondition, ErrorTextId, ScriptName, Comment) VALUES
-(13, 1, 69705, 0, 0, 31, 0, 3, 36838, 0, 0, 0, '', NULL),
-(13, 1, 69705, 0, 1, 31, 0, 3, 36839, 0, 0, 0, '', NULL),
-(13, 3, 69400, 0, 0, 31, 0, 3, 37540, 0, 0, 0, '', NULL),
-(13, 3, 69402, 0, 0, 31, 0, 3, 37540, 0, 0, 0, '', NULL),
-(13, 3, 69402, 0, 1, 31, 0, 3, 37215, 0, 0, 0, '', NULL),
-(13, 3, 70175, 0, 0, 31, 0, 3, 37215, 0, 0, 0, '', NULL),
-(13, 3, 70175, 0, 1, 31, 0, 3, 37540, 0, 0, 0, '', NULL),
-(13, 1, 70374, 0, 0, 31, 0, 3, 37540, 0, 0, 0, '', NULL),
-(13, 1, 70383, 0, 0, 31, 0, 3, 37215, 0, 0, 0, '', NULL),
-(13, 1, 72959, 0, 0, 31, 0, 3, 0, 0, 0, 0, '', NULL),
-(13, 3, 70173, 0, 0, 31, 0, 3, 37215, 0, 0, 0, '', NULL),
-(13, 3, 70173, 0, 0, 31, 0, 3, 38701, 0, 0, 0, '', NULL),
-(13, 3, 70173, 0, 0, 31, 0, 3, 38702, 0, 0, 0, '', NULL),
-(13, 3, 70173, 0, 0, 31, 0, 3, 38129, 0, 0, 0, '', NULL);
+(13, 1, 69705, 0, 0, 31, 0, 3, 36838, 0, 0, 0, '', NULL), -- Gunship Battle - Spell 69705 (Below Zero) target creature 36838
+(13, 1, 69705, 0, 1, 31, 0, 3, 36839, 0, 0, 0, '', NULL), -- Gunship Battle - Spell 69705 (Below Zero) target creature 36839
+(13, 3, 69400, 0, 0, 31, 0, 3, 37540, 0, 0, 0, '', NULL), -- Horde Cannon (Cannon Blast) set to hit only Skybreaker - 10N(effect 2)
+(13, 3, 69400, 0, 1, 31, 0, 3, 38128, 0, 0, 0, '', NULL), -- Horde Cannon (Cannon Blast) set to hit only Skybreaker - 10H(effect 2)
+(13, 3, 69400, 0, 2, 31, 0, 3, 38699, 0, 0, 0, '', NULL), -- Horde Cannon (Cannon Blast) set to hit only Skybreaker - 25N(effect 2)
+(13, 3, 69400, 0, 3, 31, 0, 3, 38700, 0, 0, 0, '', NULL), -- Horde Cannon (Cannon Blast) set to hit only Skybreaker - 25H(effect 2)
+(13, 3, 69402, 0, 0, 31, 0, 3, 37540, 0, 0, 0, '', NULL), -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker - 10N(effect 2)
+(13, 3, 69402, 0, 1, 31, 0, 3, 38128, 0, 0, 0, '', NULL), -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker - 10H(effect 2)
+(13, 3, 69402, 0, 2, 31, 0, 3, 38699, 0, 0, 0, '', NULL), -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker - 25N(effect 2)
+(13, 3, 69402, 0, 3, 31, 0, 3, 38700, 0, 0, 0, '', NULL), -- Horde Cannon (Incinerating Blast) set to hit only Skybreaker - 25H(effect 2)
+(13, 3, 70173, 0, 0, 31, 0, 3, 37215, 0, 0, 0, '', NULL), -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer - 10N(effect 2)
+(13, 3, 70173, 0, 1, 31, 0, 3, 38129, 0, 0, 0, '', NULL), -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer - 10H(effect 2)
+(13, 3, 70173, 0, 2, 31, 0, 3, 38701, 0, 0, 0, '', NULL), -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer - 25N(effect 2)
+(13, 3, 70173, 0, 3, 31, 0, 3, 38702, 0, 0, 0, '', NULL), -- Alliance Cannon (Cannon Blast) set to hit only Orgrimms Hammer - 25H(effect 2)
+(13, 3, 70175, 0, 0, 31, 0, 3, 37215, 0, 0, 0, '', NULL), -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer - 10N(effect 2)
+(13, 3, 70175, 0, 1, 31, 0, 3, 38129, 0, 0, 0, '', NULL), -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer - 10H(effect 2)
+(13, 3, 70175, 0, 2, 31, 0, 3, 38701, 0, 0, 0, '', NULL), -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer - 25N(effect 2)
+(13, 3, 70175, 0, 3, 31, 0, 3, 38702, 0, 0, 0, '', NULL), -- Alliance Cannon (Incinerating Blast) set to hit only Orgrimms Hammer - 25H(effect 2)
+(13, 1, 70374, 0, 0, 31, 0, 3, 37215, 0, 0, 0, '', NULL), -- Burning Pitch Alliance - 10N
+(13, 1, 70374, 0, 1, 31, 0, 3, 38129, 0, 0, 0, '', NULL), -- Burning Pitch Alliance - 10H
+(13, 1, 70374, 0, 2, 31, 0, 3, 38701, 0, 0, 0, '', NULL), -- Burning Pitch Alliance - 25N
+(13, 1, 70374, 0, 3, 31, 0, 3, 38702, 0, 0, 0, '', NULL), -- Burning Pitch Alliance - 25H
+(13, 1, 70383, 0, 0, 31, 0, 3, 37540, 0, 0, 0, '', NULL), -- Burning Pitch Horde - 10N
+(13, 1, 70383, 0, 1, 31, 0, 3, 38128, 0, 0, 0, '', NULL), -- Burning Pitch Horde - 10H
+(13, 1, 70383, 0, 2, 31, 0, 3, 38699, 0, 0, 0, '', NULL), -- Burning Pitch Horde - 25N
+(13, 1, 70383, 0, 3, 31, 0, 3, 38700, 0, 0, 0, '', NULL), -- Burning Pitch Horde - 25H
+(13, 1, 72959, 0, 0, 31, 0, 3, 0, 0, 0, 0, '', NULL);     -- Achievement (Radius: 50000 yards)
+
 
 -- Loot templates
 -- Fix by TrinityCore
@@ -358,28 +342,6 @@ INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `
 (@Twins,47304,0,1,1,1,1), -- Legplates of Ascension
 (@Twins,47305,0,1,1,1,1); -- Legionnaire's Gorget
 SET @Gunship10N := 28057; -- Data1 for 201872 & 202177
-SET @Ref10J := 12036;
--- Gunship_Armory10N_reference
-DELETE FROM `reference_loot_template` WHERE `entry`=@Ref10J;
-INSERT INTO `reference_loot_template` (`entry`,`item`,`ChanceOrQuestChance`,`lootmode`,`groupid`,`mincountOrRef`,`maxcount`) VALUES
-(@Ref10J,50791,0,1,1,1,1), -- Saronite Gargoyle Cloak
-(@Ref10J,50795,0,1,1,1,1), -- Cord of Dark Suffering
-(@Ref10J,50794,0,1,1,1,1), -- Neverending Winter
-(@Ref10J,50787,0,1,1,1,1), -- Frost Giant's Cleaver
-(@Ref10J,50793,0,1,1,1,1), -- Midnight Sun
-(@Ref10J,50788,0,1,1,1,1), -- Bone Drake's Enameled Boots
-(@Ref10J,50792,0,1,1,1,1), -- Pauldrons of Lost Hope
-(@Ref10J,50340,0,1,1,1,1), -- Muradin's Spyglass
-(@Ref10J,50797,0,1,1,1,1), -- Ice-Reinforced Vrykul Helm
-(@Ref10J,50790,0,1,1,1,1), -- Abomination's Bloody Ring
-(@Ref10J,50789,0,1,1,1,1), -- Icecrown Rampart Bracers
-(@Ref10J,50796,0,1,1,1,1); -- Bracers of Pale Illumination
--- Bind the refs to the objects
-DELETE FROM `gameobject_loot_template` WHERE `entry`=@Gunship10N;
-INSERT INTO `gameobject_loot_template` (`entry`,`item`,`ChanceOrQuestChance`,`lootmode`,`groupid`,`mincountOrRef`,`maxcount`) VALUES
--- Gunship10N
-(@Gunship10N,@emblem,100,1,0,2,2), -- Gunship Armory 2xemblems 10N
-(@Gunship10N,1,100,1,0,-@Ref10J,2); -- 2 from reference 10Normal
 
 DELETE FROM `creature_addon` WHERE `guid` IN (83459,78383,81170,81165,81531);
 DELETE FROM `gameobject_loot_template` WHERE `entry` IN (28045,28057,28072,28090);
