@@ -1,1 +1,1 @@
-ALTER TABLE `world_rpp`.`creature_template` ADD `equipment_id` MEDIUMINT(8) UNSIGNED DEFAULT 1 NULL AFTER `RegenHealth`, CHANGE `mechanic_immune_mask` `mechanic_immune_mask` INT(10) UNSIGNED DEFAULT 0 NOT NULL AFTER `equipment_id`;
+ALTER TABLE `world_rpp`.`creature_template` ADD `equipment_id` MEDIUMINT(8) UNSIGNED DEFAULT 1 NOT NULL AFTER `RegenHealth`, CHANGE `mechanic_immune_mask` `mechanic_immune_mask` INT(10) UNSIGNED DEFAULT 0 NOT NULL AFTER `equipment_id`;

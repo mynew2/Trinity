@@ -67,10 +67,10 @@ INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type
  
 -- TrinityCore\sql\updates\world\2013_02_16_04_world_creature_loot_template.sql 
 -- Remove Zulian Mudskunk from Zulian Crocolisk's loot template
-DELETE FROM `creature_loot_template` WHERE `entry`=15043 AND `item`=19975;
+DELETE FROM `creature_loot_template` WHERE `entry`=15043 and `item`=19975;
 -- Add Vicious Oil (Item) into loot template of Vicious Oil (NPC)
-DELETE FROM `creature_loot_template` WHERE `entry`=30325 AND `item`=42640;
-INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
+DELETE FROM `creature_loot_template` WHERE `entry`=30325 and `item`=42640;
+INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) values
 (30325,42640,-100,1,0,1,1);
  
 -- TrinityCore\sql\updates\world\2013_02_16_05_world_quest_template.sql 
@@ -122,7 +122,7 @@ UPDATE `creature_template` SET `equipment_id` = 0 WHERE `name` LIKE '%(1)' OR `n
 
 -- Delete unused templates
 DROP TABLE IF EXISTS `temp_c_e`;
-CREATE TABLE IF NOT EXISTS `temp_c_e` (`entry` MEDIUMINT(8));
+CREATE TABLE IF NOT EXISTS `temp_c_e` (`entry` mediumint(8));
 ALTER TABLE `temp_c_e` ADD INDEX `ind` (`entry`);
 INSERT INTO `temp_c_e` SELECT `equipment_id` FROM `creature_template` WHERE `equipment_id` != 0 UNION
                        SELECT `equipment_id` FROM `creature` WHERE `equipment_id` != 0 UNION
@@ -133,13 +133,13 @@ DROP TABLE `temp_c_e`;
 -- Create temporary table to hold the values of creature_equip_template with converted entry
 DROP TABLE IF EXISTS `creature_equip_template2`;
 CREATE TABLE IF NOT EXISTS `creature_equip_template2` (
-  `entry` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-  `id` TINYINT(3) UNSIGNED NOT NULL DEFAULT '1',
-  `itemEntry1` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-  `itemEntry2` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-  `itemEntry3` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
+  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `itemEntry1` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `itemEntry2` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `itemEntry3` mediumint(8) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`entry`, `id`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `creature_equip_template2` (`entry`, `id`, `itemEntry1`, `itemEntry2`, `itemEntry3`)
     SELECT `creature_template`.`entry`, 1, `itemEntry1`, `itemEntry2`, `itemEntry3`
@@ -172,8 +172,8 @@ INSERT INTO `creature_equip_template` (`entry`, `id`, `itemEntry1`, `itemEntry2`
 -- ALTER TABLE `creature_equip_template` ADD `id` tinyint(3) unsigned NOT NULL DEFAULT '1' AFTER `entry`;
 -- ALTER TABLE `creature_equip_template` DROP INDEX `PRIMARY`, ADD PRIMARY KEY (`entry`, `id`);
 ALTER TABLE `creature_template` DROP `equipment_id`;
-ALTER TABLE `creature` CHANGE `equipment_id` `equipment_id` TINYINT(3) UNSIGNED NOT NULL DEFAULT '1';
-ALTER TABLE `game_event_model_equip` CHANGE `equipment_id` `equipment_id` TINYINT(3) UNSIGNED NOT NULL DEFAULT '1';
+ALTER TABLE `creature` CHANGE `equipment_id` `equipment_id` tinyint(3) unsigned NOT NULL DEFAULT '1';
+ALTER TABLE `game_event_model_equip` CHANGE `equipment_id` `equipment_id` tinyint(3) unsigned NOT NULL DEFAULT '1';
 
 -- Conversion from SAI
 UPDATE `smart_scripts` SET `action_param1` = 1 WHERE `entryorguid` = 2523901 AND `source_type` = 9 AND `id` = 3;
@@ -467,9 +467,9 @@ INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type
 UPDATE `quest_template` SET `requiredspellcast1`=0 WHERE `id`=10859;
  
 -- TrinityCore\sql\updates\world\2013_02_19_04_world_misc_equip.sql 
-ALTER TABLE `creature` CHANGE `equipment_id` `equipment_id` TINYINT(3) SIGNED NOT NULL DEFAULT '0';
-ALTER TABLE `creature_equip_template` CHANGE `id` `id` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0';
-ALTER TABLE `game_event_model_equip` CHANGE `equipment_id` `equipment_id` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0';
+ALTER TABLE `creature` CHANGE `equipment_id` `equipment_id` tinyint(3) signed NOT NULL DEFAULT '0';
+ALTER TABLE `creature_equip_template` CHANGE `id` `id` tinyint(3) unsigned NOT NULL DEFAULT '0';
+ALTER TABLE `game_event_model_equip` CHANGE `equipment_id` `equipment_id` tinyint(3) unsigned NOT NULL DEFAULT '0';
 
 UPDATE `creature` SET `equipment_id`=0 WHERE `id` NOT IN (SELECT `entry` FROM `creature_equip_template`);
 
@@ -511,17 +511,17 @@ DROP TABLE IF EXISTS `creature_summon_groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `creature_summon_groups` (
-  `summonerId` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-  `summonerType` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
-  `groupId` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
-  `entry` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-  `position_x` FLOAT NOT NULL DEFAULT '0',
-  `position_y` FLOAT NOT NULL DEFAULT '0',
-  `position_z` FLOAT NOT NULL DEFAULT '0',
-  `orientation` FLOAT NOT NULL DEFAULT '0',
-  `summonType` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
-  `summonTime` INT(10) UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+  `summonerId` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `summonerType` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `groupId` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `position_x` float NOT NULL DEFAULT '0',
+  `position_y` float NOT NULL DEFAULT '0',
+  `position_z` float NOT NULL DEFAULT '0',
+  `orientation` float NOT NULL DEFAULT '0',
+  `summonType` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `summonTime` int(10) unsigned NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
  
 -- TrinityCore\sql\updates\world\2013_02_24_01_world_areatrigger_scripts.sql 
@@ -784,8 +784,8 @@ UPDATE `creature` SET `modelid`=11686 WHERE `guid` BETWEEN 132304 AND 132308;
 -- TrinityCore\sql\updates\world\2013_02_28_00_world_playercreateinfo_spell.sql 
 -- Add missing generic spell for opening chests for most of Blood Elf's classes
 -- (was preventing them to loot Eye of Eternity Alexstrasza's Gift Box, Heart of Magic and maybe more.)
-DELETE FROM `playercreateinfo_spell` WHERE `racemask`=10 AND `Spell`=61437;
-INSERT INTO `playercreateinfo_spell` (`racemask`,`classmask`,`Spell`,`Note`) VALUES
+DELETE FROM `playercreateinfo_spell` WHERE `race`=10 AND `Spell`=61437;
+INSERT INTO `playercreateinfo_spell` (`race`,`class`,`Spell`,`Note`) VALUES
 (10,2,61437, 'Opening'),
 (10,3,61437, 'Opening'),
 (10,4,61437, 'Opening'),
@@ -1034,7 +1034,7 @@ INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type
 -- TrinityCore\sql\updates\world\2013_03_04_01_world_waypoint_data.sql 
 SET @GUID := 40470;
 SET @PATH := @GUID*10;
-DELETE FROM `creature` WHERE `id`=18686;
+DELETE FROM `creature` where `id`=18686;
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`MovementType`,`npcflag`,`unit_flags`,`dynamicflags`) VALUES 
 (@GUID,18686,530,1,1,0,0,-2847.327,3195.10722,7.4167,.0910940,300,0,0,9144,13525,2,0,0,0);
 -- Pathing Data
@@ -1275,12 +1275,12 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 -- ----------------------------
 DROP TABLE IF EXISTS `player_factionchange_quests`;
 CREATE TABLE `player_factionchange_quests` (
-  `alliance_id` INT(10) UNSIGNED NOT NULL,
-  `horde_id` INT(10) UNSIGNED NOT NULL,
+  `alliance_id` int(10) unsigned NOT NULL,
+  `horde_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`alliance_id`,`horde_id`),
   UNIQUE INDEX `alliance_uniq` (`alliance_id`),
   UNIQUE INDEX `horde_uniq` (`horde_id`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
  
 -- TrinityCore\sql\updates\world\2013_03_04_05_world_player_factionchange_quests.sql 
 DELETE FROM `player_factionchange_quests` WHERE `alliance_id` IN (9524, 8114, 7168, 7169, 7170, 7171, 7172, 8115, 8311, 8960, 8860, 8997, 9520, 9522, 9587, 9869, 9933, 9938, 9940, 9982, 9994, 9996, 10005, 10014, 10033, 10035, 10038, 10040, 10042, 10048, 10051, 10053, 10054, 10055, 10056, 10057, 10076, 10078, 10080, 10083, 10084, 10115, 10116, 10140, 10141, 10122, 10142, 10126, 10145, 10128, 10146, 10130, 10131, 10147, 10148, 10137, 10138, 10139, 10163, 10394, 10397, 10395, 10443, 10444, 10476, 10562, 10563, 10564, 10572, 10582, 10583, 10585, 10586, 10589, 10606, 10612, 10621, 10626, 10662, 10680, 10744, 10772, 10773, 10754, 10762, 10763, 10764, 10759, 10774, 10766, 10775, 10776, 10863, 10869, 10962, 11002, 11117, 11122, 11123, 11150, 11185, 11242, 11302, 11346, 11348, 11349, 11355, 11358, 11359, 11321, 11131, 12135, 11400, 11486, 11502, 11657, 11713, 11704, 11731, 11882, 11921, 11924, 11986, 11993, 12022, 12105, 12129, 12130, 12131, 12133, 12138, 12142, 12143, 12146, 12153, 12161, 12183, 12184, 12185, 12219, 12220, 12222, 12223, 12246, 12247, 12249, 12248, 12250, 12255, 12278, 12464, 12323, 12416, 12417, 12418, 12460, 12479, 12491, 12854, 12858, 12860, 12862, 12870, 12872, 12885, 13186, 13222, 13188, 13226, 13395, 13387, 13388, 13389, 13390, 13391, 13392, 13284, 13393, 13394, 13332, 13334, 13309, 13337, 13338, 13339, 13335, 13336, 13341, 13396, 13397, 13398, 13399, 13400, 13401, 13402, 13403, 13380, 13381, 13382, 13383, 13408, 13410, 13415, 13418, 13480, 13484, 13633, 13625, 13671, 13672, 13679, 13686, 13828, 13835, 13837, 14022, 14023, 14024, 14028, 14030, 14033, 14035, 14048, 14051, 14053, 14054, 14055, 14096, 14111, 20438, 20439, 24498, 24499, 24500, 24510, 24535, 24656, 24657, 24683, 24710, 24711, 24655, 24804, 24848, 25055, 25180, 25253, 25282, 25290, 25414);
@@ -2036,12 +2036,12 @@ INSERT INTO `conditions` (`SourceTypeOrReferenceId`, `SourceGroup`, `SourceEntry
 TRUNCATE TABLE `playercreateinfo_spell`;
 
 ALTER TABLE `playercreateinfo_spell`
-  CHANGE `racemask` `racemask` INT(10) UNSIGNED DEFAULT 0 NOT NULL,
-  CHANGE `classmask` `classmask` INT(10) UNSIGNED DEFAULT 0 NOT NULL;
+  CHANGE `race` `racemask` INT(10) UNSIGNED DEFAULT 0 NOT NULL,
+  CHANGE `class` `classmask` INT(10) UNSIGNED DEFAULT 0 NOT NULL;
 
 ALTER TABLE `playercreateinfo_spell_custom`
-  CHANGE `racemask` `racemask` INT(10) UNSIGNED DEFAULT 0 NOT NULL,
-  CHANGE `classmask` `classmask` INT(10) UNSIGNED DEFAULT 0 NOT NULL;
+  CHANGE `race` `racemask` INT(10) UNSIGNED DEFAULT 0 NOT NULL,
+  CHANGE `class` `classmask` INT(10) UNSIGNED DEFAULT 0 NOT NULL;
 
 INSERT INTO `playercreateinfo_spell` (`racemask`, `classmask`, `Spell`, `Note`) VALUES
 -- Races:   Human, Orc, Dwarf, Night elf, Undead, Tauren, Gnome, Troll, Dranei
@@ -6028,7 +6028,7 @@ INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type
 (@GLINTINGDIRTSCRIPT+5,9,1 ,0,0, 0,100,0,5500,5500,0,0,41,0,0,0,0,0,0,1,0,0,0,0,0,0,0, 'Glinting Dirt - Script  - Despawn');
 
 UPDATE `creature_template` SET `AIName`='SmartAI' WHERE `entry` IN(@RAINSPEAKERBUNNY,@FRENZYBUNNY,@MOSSWALKERBUNNY,@MISTWHISPERBUNNY,@SPEARBORNBUNNY,@KARTAKHOLDBUNNY,@SPARKTOUCHEDBUNNY,@SAPPHIREHIVEBUNNY,@LIFEBLOODPILLARBUNNY,@SKYREACHPILLARBUNNY);
-UPDATE `creature_template` SET `AIName`= 'SmartAI',`unit_flags`=32776,`InhabitType`=3 WHERE  `entry`IN(@LAFOO,@MOODLE,@JALOOT,@GOREGEK,@DAJIK,@ZEPIK);
+UPDATE `creature_template` SET `AIName`= 'SmartAI',`unit_flags`=32776,`InhabitType`=3 WHERE  `entry`In(@LAFOO,@MOODLE,@JALOOT,@GOREGEK,@DAJIK,@ZEPIK);
 UPDATE `creature_template` SET `gossip_menu_id`=9747, `npcflag`=`npcflag`|1, `speed_run`=1.30952 WHERE `entry`=@JALOOT;
 UPDATE `creature_template` SET `npcflag`=`npcflag`|1, `speed_run`=1.19048 WHERE `entry`=@MOODLE;
 UPDATE `gossip_menu_option` SET `action_menu_id`=9684 WHERE `menu_id`=9677;
@@ -6036,6 +6036,7 @@ UPDATE `creature_template` SET `gossip_menu_id`=9745 WHERE `entry`=28106;
 UPDATE `creature_template` SET `speed_walk`=0.66667, `speed_run`=0.99206 WHERE `entry`=@GOREGEK;
 UPDATE `creature_template` SET `speed_walk`=0.66667, `speed_run`=0.99206, `npcflag`=`npcflag`|1 WHERE `entry`=@ZEPIK;
 UPDATE `gossip_menu_option` SET `action_menu_id`=9684 WHERE `menu_id`=9677;
+DELETE FROM `creature_involvedrelation` WHERE  `id`=28216 AND `quest`=12582;
 
 DELETE FROM `gossip_menu` WHERE `entry`=9747;
 DELETE FROM `gossip_menu` WHERE `entry`=9562 AND `text_id`=12883;
@@ -6728,7 +6729,7 @@ INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type
 (@GLINTINGDIRTSCRIPT+5,9,1 ,0,0, 0,100,0,5500,5500,0,0,41,0,0,0,0,0,0,1,0,0,0,0,0,0,0, 'Glinting Dirt - Script  - Despawn');
 
 UPDATE `creature_template` SET `AIName`='SmartAI' WHERE `entry` IN(@RAINSPEAKERBUNNY,@FRENZYBUNNY,@MOSSWALKERBUNNY,@MISTWHISPERBUNNY,@SPEARBORNBUNNY,@KARTAKHOLDBUNNY,@SPARKTOUCHEDBUNNY,@SAPPHIREHIVEBUNNY,@LIFEBLOODPILLARBUNNY,@SKYREACHPILLARBUNNY);
-UPDATE `creature_template` SET `AIName`= 'SmartAI',`unit_flags`=32776,`InhabitType`=3 WHERE  `entry`IN(@LAFOO,@MOODLE,@JALOOT,@GOREGEK,@DAJIK,@ZEPIK);
+UPDATE `creature_template` SET `AIName`= 'SmartAI',`unit_flags`=32776,`InhabitType`=3 WHERE  `entry`In(@LAFOO,@MOODLE,@JALOOT,@GOREGEK,@DAJIK,@ZEPIK);
 UPDATE `creature_template` SET `gossip_menu_id`=9747, `npcflag`=`npcflag`|1, `speed_run`=1.30952 WHERE `entry`=@JALOOT;
 UPDATE `creature_template` SET `npcflag`=`npcflag`|1, `speed_run`=1.19048 WHERE `entry`=@MOODLE;
 UPDATE `gossip_menu_option` SET `action_menu_id`=9684 WHERE `menu_id`=9677;
@@ -6736,6 +6737,7 @@ UPDATE `creature_template` SET `gossip_menu_id`=9745 WHERE `entry`=28106;
 UPDATE `creature_template` SET `speed_walk`=0.66667, `speed_run`=0.99206 WHERE `entry`=@GOREGEK;
 UPDATE `creature_template` SET `speed_walk`=0.66667, `speed_run`=0.99206, `npcflag`=`npcflag`|1 WHERE `entry`=@ZEPIK;
 UPDATE `gossip_menu_option` SET `action_menu_id`=9684 WHERE `menu_id`=9677;
+DELETE FROM `creature_involvedrelation` WHERE  `id`=28216 AND `quest`=12582;
 
 DELETE FROM `gossip_menu` WHERE `entry`=9747;
 DELETE FROM `gossip_menu` WHERE `entry`=9562 AND `text_id`=12883;
@@ -7947,7 +7949,7 @@ UPDATE `smart_scripts` SET `link`=0 WHERE `entryorguid`=22231 AND `source_type`=
  
 -- TrinityCore\sql\updates\world\2013_04_14_00_world_game_event.sql 
 ALTER TABLE `game_event`
-ADD COLUMN `announce` TINYINT(3) UNSIGNED NULL DEFAULT 2 COMMENT '0 dont announce, 1 announce, 2 value from config' AFTER `world_event`;
+ADD COLUMN `announce` tinyint(3) unsigned NULL DEFAULT 2 COMMENT '0 dont announce, 1 announce, 2 value from config' AFTER `world_event`;
  
 -- TrinityCore\sql\updates\world\2013_04_14_00_world_misc.sql 
 SET @CGUID := 110258;
@@ -8216,7 +8218,7 @@ UPDATE `smart_scripts` SET `event_flags`=1 WHERE  `entryorguid`=2244 AND `source
  
 -- TrinityCore\sql\updates\world\2013_04_20_00_world_creature_loot_template.sql 
 -- Insert Frozen Orb into The Prophet Tharon'ja's loot template
-DELETE FROM `creature_loot_template` WHERE `entry`=31360 AND `item`=43102;
+DELETE FROM `creature_loot_template` WHERE `entry`=31360 and `item`=43102;
 INSERT INTO `creature_loot_template` (`entry`,`item`,`ChanceOrQuestChance`,`lootmode`,`groupid`,`mincountOrRef`,`maxcount`) VALUES
 (31360,43102,100,1,0,1,1);
  
@@ -8315,7 +8317,7 @@ UPDATE `creature_template` SET `ScriptName`='' WHERE  `entry` IN (10981,10982,10
 DROP TABLE IF EXISTS ip2nation;
 DROP TABLE IF EXISTS ip2nationCountries;
 
-DELETE FROM `command` WHERE `name` IN ('account lock', 'account lock ip', 'account lock country');
+DELETE FROM `command` WHERE `name` in ('account lock', 'account lock ip', 'account lock country');
 INSERT INTO `command` (`name`,`security`,`help`) VALUES
 ('account lock ip', 0, 'Syntax: .account lock ip [on|off]\nAllow login from account only from current used IP or remove this requirement.'),
 ('account lock country', 0, 'Syntax: .account lock country [on|off]\nAllow login from account only from current used Country or remove this requirement.');
@@ -8620,7 +8622,7 @@ INSERT INTO `trinity_string` (`entry`, `content_default`) VALUES
 (@ENTRY+1, 'Gameobject %s (GUID: %u) damaged %u (actual health: %u).');
  
 -- TrinityCore\sql\updates\world\2013_05_13_00_world_spell_target_position.sql 
-ALTER TABLE `spell_target_position` ADD COLUMN `effIndex` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' AFTER `id`;
+ALTER TABLE `spell_target_position` ADD COLUMN `effIndex` tinyint(3) UNSIGNED NOT NULL DEFAULT '0' AFTER `id`;
 ALTER TABLE `spell_target_position` DROP INDEX `PRIMARY`, ADD PRIMARY KEY (`id`, `effIndex`);
  
 UPDATE `spell_target_position` SET `effIndex`='1' WHERE `id` IN (53821, 68081, 46473, 73655, 72546, 72340, 67838, 67835, 67836, 67837, 67834, 49098, 49097, 54963, 11012, 8606);
@@ -14049,7 +14051,7 @@ INSERT INTO spell_script_names (spell_id, ScriptName) VALUES
 (19873, 'spell_egg_event');
 
 DELETE FROM spell_linked_spell WHERE spell_trigger=42013 AND spell_effect=45537;
-INSERT INTO spell_linked_spell (spell_trigger, spell_effect, COMMENT) VALUES
+INSERT INTO spell_linked_spell (spell_trigger, spell_effect, comment) VALUES
 (42013, 45537, 'Visual Channel');
 
 -- nefarian
@@ -15813,7 +15815,7 @@ INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type
 -- TrinityCore\sql\updates\world\2013_06_30_07_world_creature_loot_template.sql 
 -- Gnomish Grenades have Very High drop chance
 -- http://eu.battle.net/wow/en/item/34772
-UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=-90 WHERE `entry`=25449 AND `item`=34772;
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=-90 WHERE `entry`=25449 and `item`=34772;
  
 -- TrinityCore\sql\updates\world\2013_06_30_08_world_player_factionchange_spells.sql 
 DELETE FROM `player_factionchange_spells` WHERE `alliance_id`=59791 AND `horde_id`=59793;
@@ -16865,7 +16867,7 @@ UPDATE `creature_template` SET `KillCredit1`=13439, `modelid1`=13472, `modelid2`
 UPDATE `creature_template` SET `KillCredit1`=10364, `modelid1`=9763, `modelid2`=0, `modelid3`=0, `modelid4`=0, `gossip_menu_id`=0, `minlevel`=80, `maxlevel`=80, `faction_A`=1214, `faction_H`=1214, `npcflag`=128, `speed_walk`=1, `speed_run`=1.14286, `rank`=0, `mindmg`=315, `maxdmg`=472, `attackpower`=118, `dmg_multiplier`=1, `baseattacktime`=1500, `rangeattacktime`=1500, `unit_class`=1, `unit_flags`=4096, `minrangedmg`=252, `maxrangedmg`=378, `rangedattackpower`=94, `type`=7, `type_flags`=0, `spell1`=0, `spell2`=0, `spell3`=0, `spell4`=0, `mingold`=0, `maxgold`=0 WHERE `entry`=37485;
 UPDATE `creature_template` SET `KillCredit1`=2225, `modelid1`=14781, `modelid2`=0, `modelid3`=0, `modelid4`=0, `gossip_menu_id`=0, `minlevel`=80, `maxlevel`=80, `faction_A`=1214, `faction_H`=1214, `npcflag`=128, `speed_walk`=1, `speed_run`=1.14286, `rank`=0, `mindmg`=315, `maxdmg`=472, `attackpower`=118, `dmg_multiplier`=1, `baseattacktime`=1500, `rangeattacktime`=1500, `unit_class`=1, `unit_flags`=4096, `minrangedmg`=252, `maxrangedmg`=378, `rangedattackpower`=94, `type`=7, `type_flags`=0, `spell1`=0, `spell2`=0, `spell3`=0, `spell4`=0, `mingold`=0, `maxgold`=0 WHERE `entry`=37486;
 
-UPDATE `creature_template` SET EXP=2 WHERE `entry` IN (37234,
+update `creature_template` set exp=2 where `entry` in (37234,
 37236, 37237, 37239, 37240, 37242, 37243, 37244, 37250, 37251, 37264, 
 37267, 37268, 37269, 37278, 37281, 37282, 37283, 37284, 37285, 37287, 
 37289, 37291, 37294, 37296, 37297, 37300, 37302, 37305, 37308, 37310, 
@@ -17488,7 +17490,7 @@ INSERT INTO `spelldifficulty_dbc` (`id`,`spellid0`,`spellid1`,`spellid2`,`spelli
  
 -- TrinityCore\sql\updates\world\2013_07_06_01_world_conditions.sql 
 UPDATE `quest_template` SET `PrevQuestId`=0 WHERE  `Id`=12486;
-DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId` IN (19,20) AND `SourceEntry`IN(11595,11596,11597,12486);
+DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId` IN (19,20) and `SourceEntry`IN(11595,11596,11597,12486);
 INSERT INTO `conditions` (`SourceTypeOrReferenceId`,`SourceGroup`,`SourceEntry`,`SourceId`,`ElseGroup`,`ConditionTypeOrReference`,`ConditionTarget`,`ConditionValue1`,`ConditionValue2`,`ConditionValue3`,`NegativeCondition`,`ErrorType`,`ErrorTextId`,`ScriptName`,`Comment`) VALUES 
 (20,0,12486,0,0,8,0,11595,0,0,0,0,0, '', 'To Bor gorok Outpost,Quickly! once The Defense of Warsong Hold Has been completed'),
 (19,0,12486,0,0,8,0,11595,0,0,0,0,0, '', 'To Bor gorok Outpost,Quickly! once The Defense of Warsong Hold Has been completed'),
@@ -18513,7 +18515,7 @@ UPDATE `item_template` SET `Flags`=0x80000040 WHERE `entry`=40970;
 UPDATE `item_template` SET `Flags`=0x80000800 WHERE `entry`=41843;
 UPDATE `item_template` SET `Flags`=0x80000800 WHERE `entry`=42782;
 
-ALTER TABLE `item_template` CHANGE `Flags` `Flags` INT(10) UNSIGNED NOT NULL DEFAULT '0';
+ALTER TABLE `item_template` CHANGE `Flags` `Flags` int(10) unsigned NOT NULL DEFAULT '0';
  
 -- TrinityCore\sql\updates\world\2013_07_15_00_world_gossip.sql 
 -- Add SAI for Sputtervalve <Independent Contractor> Quest 6981

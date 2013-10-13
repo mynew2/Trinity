@@ -228,124 +228,96 @@ INSERT INTO conditions (SourceTypeOrReferenceId, SourceGroup, SourceEntry, Sourc
 (13, 1, 70383, 0, 3, 31, 0, 3, 38700, 0, 0, 0, '', NULL), -- Burning Pitch Horde - 25H
 (13, 1, 72959, 0, 0, 31, 0, 3, 0, 0, 0, 0, '', NULL);     -- Achievement (Radius: 50000 yards)
 
+-- Loots
+-- Loot 10N
+DELETE FROM `gameobject_loot_template` WHERE (`entry`=201872);
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
+(201872, 49426, 100, 1, 0, 2, 2), -- 2 Emblema de escarcha
+(201872, 50340, 0, 1, 1, 1, 1), -- Muradin's Spyglass
+(201872, 50787, 0, 1, 1, 1, 1), -- Frost Giant's Cleaver
+(201872, 50788, 0, 1, 1, 1, 1), -- Bone Drake's Enameled Boots
+(201872, 50789, 0, 1, 2, 1, 1), -- Icecrown Rampart Bracers
+(201872, 50790, 0, 1, 2, 1, 1), -- Abomination's Bloody Ring
+(201872, 50791, 0, 1, 1, 1, 1), -- Saronite Gargoyle Cloak
+(201872, 50792, 0, 1, 2, 1, 1), -- Pauldrons of Lost Hope
+(201872, 50793, 0, 1, 1, 1, 1), -- Midnight Sun
+(201872, 50794, 0, 1, 1, 1, 1), -- Neverending Winter
+(201872, 50795, 0, 1, 2, 1, 1), -- Cord of Dark Suffering
+(201872, 50796, 0, 1, 2, 1, 1), -- Bracers of Pale Illumination
+(201872, 50797, 0, 1, 2, 1, 1); -- Ice-Reinforced Vrykul Helm
 
--- Loot templates
--- Fix by TrinityCore
--- Set Variables
-SET @Gunship10N := 28057; -- Data1 for 201872 & 202177
-SET @Gunship10H := 28045; -- Data1 for 201873 & 202178
-SET @Gunship25N := 28072; -- Data1 for 201874 & 202179
-SET @Gunship25H := 28090; -- Data1 for 201875 & 202180
-SET @emblem := 49426; -- Emblem of Frost
-SET @SfShard := 50274; -- Shadowfrost Shard
-SET @PriSar := 49908; -- Primordial Saronite
--- Dug up the old references i created for UP34:
-SET @Ref10J := 34329;
-SET @Ref25J := 34251;
-SET @RefJ10H := 34263;
-SET @RefJ25H := 34275;
+-- Loot 25N
+DELETE FROM `gameobject_loot_template` WHERE (`entry`=201873);
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
+(201873, 49426, 100, 1, 0, 2, 2), -- 2 Emblema de escarcha
+(201873, 49908, 10, 1, 0, 1, 1), -- Saronita Primordial
+(201873, 50274, 37.5, 1, 0, 1, 1), -- Fragmento de escarcha de las sombras (agonía de sombras)
+(201873, 49998, 0, 1, 1, 1, 1), -- Shadowvault Slayer's Cloak
+(201873, 49999, 0, 1, 2, 1, 1), -- Skeleton Lord's Circle
+(201873, 50000, 0, 1, 2, 1, 1), -- Scourge Hunter's Vambraces
+(201873, 50001, 0, 1, 3, 1, 1), -- Ikfirus's Sack of Wonder
+(201873, 50002, 0, 1, 2, 1, 1), -- Polar Bear Claw Bracers
+(201873, 50003, 0, 1, 3, 1, 1), -- Boneguard Commander's Pauldrons
+(201873, 50005, 0, 1, 1, 1, 1), -- Amulet of the Silent Eulogy
+(201873, 50006, 0, 1, 3, 1, 1), -- Corp'rethar Ceremonial Crown
+(201873, 50008, 0, 1, 1, 1, 1), -- Ring of Rapid Ascent
+(201873, 50009, 0, 1, 3, 1, 1), -- Boots of Unnatural Growth
+(201873, 50010, 0, 1, 2, 1, 1), -- Waistband of Righteous Fury
+(201873, 50011, 0, 1, 1, 1, 1), -- Gunship Captain's Mittens
+(201873, 50352, 0, 1, 1, 1, 1), -- Corpse Tongue Coin
+(201873, 50359, 0, 1, 2, 1, 1), -- Althor's Abacus
+(201873, 50411, 0, 1, 3, 1, 1); -- Scourgeborne Waraxe
 
--- Gunship_Armory10N_reference
-DELETE FROM `reference_loot_template` WHERE `entry` IN (@Ref10J,@Ref25J,@RefJ10H,@RefJ25H);
-INSERT INTO `reference_loot_template` (`entry`,`item`,`ChanceOrQuestChance`,`lootmode`,`groupid`,`mincountOrRef`,`maxcount`) VALUES
-(@Ref10J,50791,0,1,1,1,1), -- Saronite Gargoyle Cloak
-(@Ref10J,50795,0,1,1,1,1), -- Cord of Dark Suffering
-(@Ref10J,50794,0,1,1,1,1), -- Neverending Winter
-(@Ref10J,50787,0,1,1,1,1), -- Frost Giant's Cleaver
-(@Ref10J,50793,0,1,1,1,1), -- Midnight Sun
-(@Ref10J,50788,0,1,1,1,1), -- Bone Drake's Enameled Boots
-(@Ref10J,50792,0,1,1,1,1), -- Pauldrons of Lost Hope
-(@Ref10J,50340,0,1,1,1,1), -- Muradin's Spyglass
-(@Ref10J,50797,0,1,1,1,1), -- Ice-Reinforced Vrykul Helm
-(@Ref10J,50790,0,1,1,1,1), -- Abomination's Bloody Ring
-(@Ref10J,50789,0,1,1,1,1), -- Icecrown Rampart Bracers
-(@Ref10J,50796,0,1,1,1,1), -- Bracers of Pale Illumination
--- Gunship_Armory25N_reference
-(@Ref25J,50011,0,1,1,1,1), -- Gunship Captain's Mittens
-(@Ref25J,50002,0,1,1,1,1), -- Polar Bear Claw Bracers
-(@Ref25J,50006,0,1,1,1,1), -- Corp'rethar Ceremonial Crown
-(@Ref25J,50010,0,1,1,1,1), -- Waistband of Righteous Fury
-(@Ref25J,50003,0,1,1,1,1), -- Boneguard Commander's Pauldrons
-(@Ref25J,50000,0,1,1,1,1), -- Scourge Hunter's Vambraces
-(@Ref25J,50359,0,1,1,1,1), -- Althor's Abacus
-(@Ref25J,50352,0,1,1,1,1), -- Corpse Tongue Coin
-(@Ref25J,49999,0,1,1,1,1), -- Skeleton Lord's Circle
-(@Ref25J,50009,0,1,1,1,1), -- Boots of Unnatural Growth
-(@Ref25J,50008,0,1,1,1,1), -- Ring of Rapid Ascent
-(@Ref25J,49998,0,1,1,1,1), -- Shadowvault Slayer's Cloak
-(@Ref25J,50005,0,1,1,1,1), -- Amulet of the Silent Eulogy
-(@Ref25J,50411,0,1,1,1,1), -- Scourgeborne Waraxe
-(@Ref25J,50001,0,1,1,1,1), -- Ikfirus's Sack of Wonder
--- Gunship_Armory10H_reference
-(@RefJ10H,51912,0,1,1,1,1), -- Saronite Gargoyle Cloak (heroic)
-(@RefJ10H,51908,0,1,1,1,1), -- Cord of Dark Suffering (heroic)
-(@RefJ10H,51909,0,1,1,1,1), -- Neverending Winter (heroic)
-(@RefJ10H,51916,0,1,1,1,1), -- Frost Giant's Cleaver (heroic)
-(@RefJ10H,51910,0,1,1,1,1), -- Midnight Sun (heroic)
-(@RefJ10H,51915,0,1,1,1,1), -- Bone Drake's Enameled Boots (heroic)
-(@RefJ10H,51911,0,1,1,1,1), -- Pauldrons of Lost Hope (heroic)
-(@RefJ10H,50345,0,1,1,1,1), -- Muradin's Spyglass (heroic)
-(@RefJ10H,51906,0,1,1,1,1), -- Ice-Reinforced Vrykul Helm (heroic)
-(@RefJ10H,51913,0,1,1,1,1), -- Abomination's Bloody Ring (heroic)
-(@RefJ10H,51914,0,1,1,1,1), -- Icecrown Rampart Bracers (heroic)
-(@RefJ10H,51907,0,1,1,1,1), -- Bracers of Pale Illumination (heroic)
--- Gunship_Armory25H_reference
-(@RefJ25H,50663,0,1,1,1,1), -- Gunship Captain's Mittens (heroic)
-(@RefJ25H,50659,0,1,1,1,1), -- Polar Bear Claw Bracers (heroic)
-(@RefJ25H,50661,0,1,1,1,1), -- Corp'rethar Ceremonial Crown (heroic)
-(@RefJ25H,50667,0,1,1,1,1), -- Waistband of Righteous Fury (heroic)
-(@RefJ25H,50660,0,1,1,1,1), -- Boneguard Commander's Pauldrons (heroic)
-(@RefJ25H,50655,0,1,1,1,1), -- Scourge Hunter's Vambraces (heroic)
-(@RefJ25H,50366,0,1,1,1,1), -- Althor's Abacus (heroic)
-(@RefJ25H,50349,0,1,1,1,1), -- Corpse Tongue Coin (heroic)
-(@RefJ25H,50657,0,1,1,1,1), -- Skeleton Lord's Circle (heroic)
-(@RefJ25H,50665,0,1,1,1,1), -- Boots of Unnatural Growth (heroic)
-(@RefJ25H,50664,0,1,1,1,1), -- Ring of Rapid Ascent (heroic)
-(@RefJ25H,50653,0,1,1,1,1), -- Shadowvault Slayer's Cloak (heroic)
-(@RefJ25H,50658,0,1,1,1,1), -- Amulet of the Silent Eulogy (heroic)
-(@RefJ25H,50654,0,1,1,1,1), -- Scourgeborne Waraxe (heroic)
-(@RefJ25H,50656,0,1,1,1,1); -- Ikfirus's Sack of Wonder (heroic)
+-- Loot 10HC
+DELETE FROM `gameobject_loot_template` WHERE (`entry`=201874);
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
+(201874, 49426, 100, 1, 0, 2, 2), -- 2 Emblema de escarcha
+(201874, 49908, 10, 1, 0, 1, 1), -- Saronita Primordial
+(201874, 50345, 0, 1, 2, 1, 1), -- Muradin's Spyglass (heroic)
+(201874, 51906, 0, 1, 1, 1, 1), -- Ice-Reinforced Vrykul Helm (heroic)
+(201874, 51907, 0, 1, 1, 1, 1), -- Bracers of Pale Illumination (heroic)
+(201874, 51908, 0, 1, 1, 1, 1), -- Cord of Dark Suffering (heroic)
+(201874, 51909, 0, 1, 2, 1, 1), -- Neverending Winter (heroic)
+(201874, 51910, 0, 1, 2, 1, 1), -- Midnight Sun (heroic)
+(201874, 51911, 0, 1, 2, 1, 1), -- Pauldrons of Lost Hope (heroic)
+(201874, 51912, 0, 1, 2, 1, 1), -- Saronite Gargoyle Cloak (heroic)
+(201874, 51913, 0, 1, 1, 1, 1), -- Abomination's Bloody Ring (heroic)
+(201874, 51914, 0, 1, 2, 1, 1), -- Icecrown Rampart Bracers (heroic)
+(201874, 51915, 0, 1, 1, 1, 1), -- Bone Drake's Enameled Boots (heroic)
+(201874, 51916, 0, 1, 1, 1, 1); -- Frost Giant's Cleaver (heroic)
 
--- Bind the refs to the objects
-DELETE FROM `gameobject_loot_template` WHERE `entry` IN (@Gunship10N,@Gunship10H,@Gunship25N,@Gunship25H);
-INSERT INTO `gameobject_loot_template` (`entry`,`item`,`ChanceOrQuestChance`,`lootmode`,`groupid`,`mincountOrRef`,`maxcount`) VALUES
--- Gunship10N
-(@Gunship10N,@emblem,100,1,0,2,2), -- Gunship Armory 2xemblems 10N
-(@Gunship10N,1,100,1,0,-@Ref10J,2), -- 2 from reference 10Normal
--- Gunship25N
-(@Gunship25N,@emblem,100,1,0,2,2), -- Gunship Armory 2xemblems 25N
-(@Gunship25N,1,100,1,0,-@Ref25J,2), -- 3 from reference 25Normal
-(@Gunship25N,@SfShard,-35,1,0,1,1), -- Shadowfrost Shard @ 38% chance
-(@Gunship25N,@PriSar,38,1,0,1,1), -- Primordial Saronite @ 10% chance
--- Gunship10H
-(@Gunship10H,@emblem,100,1,0,2,2), -- Gunship Armory 2xemblems 10H
-(@Gunship10H,1,100,1,0,-@RefJ10H,2), -- 2 from reference 10Heroic
-(@Gunship10H,@PriSar,38,1,0,1,1), -- Primordial Saronite @ 38% chance
--- Gunship25H
-(@Gunship25H,@emblem,100,1,0,2,2), -- Gunship Armory 2xemblems 25H
-(@Gunship25H,1,100,1,0,-@RefJ25H,2), -- 3 from reference 25Heroic
-(@Gunship25H,@SfShard,-75,1,0,1,1), -- Shadowfrost Shard @ 75% chance
-(@Gunship25H,@PriSar,50,1,0,1,1); -- Primordial Saronite @ 50% chance
+-- Loot 25HC
+DELETE FROM `gameobject_loot_template` WHERE (`entry`=201875);
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
+(201875, 49426, 100, 1, 0, 2, 2), -- 2 Emblema de escarcha
+(201875, 49908, 10, 1, 0, 1, 1), -- Saronita Primordial
+(201875, 50274, 75, 1, 0, 1, 1), -- Fragmento de escarcha de las sombras (agonía de sombras)
+(201875, 50349, 0, 1, 2, 1, 1), -- Corpse Tongue Coin (heroic)
+(201875, 50366, 0, 1, 1, 1, 1), -- Althor's Abacus (heroic)
+(201875, 50653, 0, 1, 3, 1, 1), -- Shadowvault Slayer's Cloak (heroic)
+(201875, 50654, 0, 1, 3, 1, 1), -- Scourgeborne Waraxe (heroic)
+(201875, 50655, 0, 1, 3, 1, 1), -- Scourge Hunter's Vambraces (heroic)
+(201875, 50656, 0, 1, 2, 1, 1), -- Ikfirus's Sack of Wonder (heroic)
+(201875, 50657, 0, 1, 3, 1, 1), -- Skeleton Lord's Circle (heroic)
+(201875, 50658, 0, 1, 1, 1, 1), -- Amulet of the Silent Eulogy (heroic)
+(201875, 50659, 0, 1, 2, 1, 1), -- Polar Bear Claw Bracers (heroic)
+(201875, 50660, 0, 1, 1, 1, 1), -- Boneguard Commander's Pauldrons (heroic)
+(201875, 50661, 0, 1, 1, 1, 1), -- Corp'rethar Ceremonial Crown (heroic)
+(201875, 50663, 0, 1, 2, 1, 1), -- Gunship Captain's Mittens (heroic)
+(201875, 50664, 0, 1, 2, 1, 1), -- Ring of Rapid Ascent (heroic)
+(201875, 50665, 0, 1, 1, 1, 1), -- Boots of Unnatural Growth (heroic)
+(201875, 50667, 0, 1, 3, 1, 1); -- Waistband of Righteous Fury (heroic)
 
-SET @Twins := 34329; 
-SET @emblem := 49426;
-DELETE FROM `reference_loot_template` WHERE `entry`=@Twins;
-INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
-(@Twins,47296,0,1,1,1,1), -- Greaves of Ruthless Judgment
-(@Twins,47297,0,1,1,1,1), -- The Executioner's Vice
-(@Twins,47298,0,1,1,1,1), -- Armguards of the Shieldmaiden
-(@Twins,47299,0,1,1,1,1), -- Belt of the Pitiless Killer
-(@Twins,47300,0,1,1,1,1), -- Gouge of the Frigid Heart
-(@Twins,47301,0,1,1,1,1), -- Skyweaver Vestments
-(@Twins,47302,0,1,1,1,1), -- Twin's Pact
-(@Twins,47303,0,1,1,1,1), -- Death's Choice
-(@Twins,47304,0,1,1,1,1), -- Legplates of Ascension
-(@Twins,47305,0,1,1,1,1); -- Legionnaire's Gorget
-SET @Gunship10N := 28057; -- Data1 for 201872 & 202177
 
-DELETE FROM `creature_addon` WHERE `guid` IN (83459,78383,81170,81165,81531);
-DELETE FROM `gameobject_loot_template` WHERE `entry` IN (28045,28057,28072,28090);
-DELETE FROM `reference_loot_template` WHERE `entry` IN (34329,12036,34251,34263,34275);
+-- Hack: Para los cofres
+UPDATE `gameobject_template` SET `data1` = 201872 WHERE `entry` = 201872;
+UPDATE `gameobject_template` SET `data1` = 201873 WHERE `entry` = 201873;
+UPDATE `gameobject_template` SET `data1` = 201874 WHERE `entry` = 201874;
+UPDATE `gameobject_template` SET `data1` = 201875 WHERE `entry` = 201875;
+UPDATE `gameobject_template` SET `data1` = 201872 WHERE `entry` = 202177;
+UPDATE `gameobject_template` SET `data1` = 201873 WHERE `entry` = 202178;
+UPDATE `gameobject_template` SET `data1` = 201874 WHERE `entry` = 202179;
+UPDATE `gameobject_template` SET `data1` = 201875 WHERE `entry` = 202180;
 
 -- Prevent players from exploiting the Rocket pack item outside of raid
 UPDATE `item_template` SET `area` = 4812 WHERE `entry` = 49278;

@@ -1431,7 +1431,7 @@ class npc_korkron_axethrower_rifleman : public CreatureScript
                 if (!UpdateVictim())
                     return;
 
-				me->DespawnOrUnsummon(60000);
+				me->DespawnOrUnsummon(390000);
                 events.Update(diff);
 
                 if (attacktimer <= diff)
@@ -1790,7 +1790,7 @@ class npc_gunship_mage : public CreatureScript
                     {
                         if (Creature* pSaurfangBoss = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_GB_HIGH_OVERLORD_SAURFANG)))
                             pSaurfangBoss->AI()->DoAction(ACTION_MAGE_DIE);
-							me->DespawnOrUnsummon(32000);
+							me->DespawnOrUnsummon(33000);
                     }
                  }
                  
@@ -1800,7 +1800,7 @@ class npc_gunship_mage : public CreatureScript
                      {
                          if (Creature* pMuradin = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_GB_MURADIN_BRONZEBEARD)))
                              pMuradin->AI()->DoAction(ACTION_MAGE_DIE);
-							me->DespawnOrUnsummon(32000);
+							 me->DespawnOrUnsummon(33000);
                      }
                  }
             }
@@ -1814,7 +1814,7 @@ class npc_gunship_mage : public CreatureScript
                 if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
 					me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
-				me->DespawnOrUnsummon(32000);
+					me->DespawnOrUnsummon(390000);
 
                 if (me->GetGUID() == _instance->GetData64(DATA_GB_BATTLE_MAGE))
                 {
@@ -1967,7 +1967,7 @@ class npc_mortar_soldier_or_rocketeer : public CreatureScript
                 if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
                     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
-				me->DespawnOrUnsummon(60000);
+				me->DespawnOrUnsummon(390000);
                 events.Update(diff);
 
                 while (uint32 eventId = events.ExecuteEvent())
@@ -2389,7 +2389,7 @@ class npc_saurfang_gunship : public CreatureScript
                             break;
                         case EVENT_OUTRO_HORDE_2:
                             StopFlyShip(orgrimmar);
-                            me->SummonGameObject(RAID_MODE(GO_CAPITAN_CHEST_H_10N, GO_CAPITAN_CHEST_H_25N, GO_CAPITAN_CHEST_H_10H, GO_CAPITAN_CHEST_H_25H), -428.992706f, 1929.730713f, 214.143417f, 1.595296f, 0, 0, 0, 0, 100000);
+                            me->SummonGameObject(RAID_MODE(GO_CAPITAN_CHEST_H_10N, GO_CAPITAN_CHEST_H_25N, GO_CAPITAN_CHEST_H_10H, GO_CAPITAN_CHEST_H_25H), -585.902893f, 2179.626221f, 537.014587f, 6.169258f, 0, 0, 0, 0, 100000);
                             me->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
                             me->GetMotionMaster()->MovePoint(0, -590.700f, 2213.01f, 539.1f);
                             break;
