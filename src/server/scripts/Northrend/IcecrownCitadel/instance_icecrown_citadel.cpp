@@ -324,7 +324,7 @@ class instance_icecrown_citadel : public InstanceMapScript
                     case NPC_SINDRAGOSAS_WARD:
                         SindragosasWardGUID = creature->GetGUID();
 						break;
-                        case NPC_GB_SKYBREAKER:
+                    case NPC_GB_SKYBREAKER:
                         SkybreakerBossGUID = creature->GetGUID();
                         break;
                     case NPC_GB_ORGRIMS_HAMMER:
